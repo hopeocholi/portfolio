@@ -2,7 +2,7 @@
 
 **Live site: [hopeocholi.github.io/portfolio](https://hopeocholi.github.io/portfolio/)**
 
-An interactive portfolio for my work as a Senior Technical Project Manager in Dublin. The opening scene is a 3D delivery network: each bright node is a project, payments flow along the connections, and selecting a node takes you to that project's case study.
+An interactive portfolio for my work as a Technical Project Manager in Dublin. The opening scene is a 3D delivery network: each bright node is a project, payments flow along the connections, and selecting a node takes you to that project's case study.
 
 ## What's inside
 
