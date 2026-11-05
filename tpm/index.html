@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hope Ocholi | Technical Project Manager, Data and AI</title>
+<meta name="description" content="Hope Ocholi, PMP. Technical Project Manager who takes data and AI from business case to production, with governance built in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EEF2F5;
+    --panel: #FFFFFF;
+    --ink: #16253A;
+    --muted: #55657A;
+    --line: #CDD6DF;
+    --found: #3E6A8C;
+    --ai: #1C9C8A;
+    --practice: #C98A1E;
+    --focus: #1C9C8A;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Source Sans 3", system-ui, sans-serif; font-size: 18px; line-height: 1.55;
+  }
+  a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+
+  header.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0; flex-wrap: wrap; }
+  .who { font-family: Sora, sans-serif; font-weight: 600; font-size: 19px; }
+  .who span { font-weight: 500; color: var(--muted); font-size: 15px; margin-left: 10px; }
+  nav.top a { margin-left: 22px; font-size: 16px; white-space: nowrap; }
+
+  .hero { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: start; padding: 28px 0 12px; }
+  h1 { font-family: Sora, sans-serif; font-weight: 700; font-size: clamp(34px, 4.4vw, 54px); line-height: 1.06; letter-spacing: -0.02em; margin: 6px 0 22px; max-width: 16ch; }
+  .lede { color: var(--muted); max-width: 44ch; margin: 0 0 26px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-block; padding: 11px 18px; border-radius: 999px; border: 1.5px solid var(--ink); text-decoration: none; font-weight: 600; font-size: 16px; }
+  .btn.primary { background: var(--ink); color: var(--paper); }
+  .facts { margin: 30px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .facts li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+  .facts b { font-family: Sora, sans-serif; font-weight: 600; }
+
+  .stage { position: relative; background: linear-gradient(180deg, #F7F9FB 0%, #E3E9EF 100%); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+  #scene { display: block; width: 100%; height: 470px; cursor: grab; touch-action: none; }
+  #scene:active { cursor: grabbing; }
+  .tier-label { position: absolute; font-family: Sora, sans-serif; font-weight: 600; font-size: 13px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.88); pointer-events: none; white-space: nowrap; transform: translate(-50%, -50%); }
+  .hint { position: absolute; left: 16px; bottom: 12px; font-size: 14px; color: var(--muted); }
+  .legend { position: absolute; right: 16px; bottom: 12px; display: flex; gap: 14px; font-size: 14px; color: var(--muted); }
+  .legend i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; border-radius: 2px; }
+  .legend .solid { background: var(--found); }
+  .legend .wire { border: 1.5px solid var(--found); }
+
+  .picker { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .picker h3 { font-family: Sora, sans-serif; font-size: 14px; font-weight: 600; margin: 0 0 6px; display: flex; align-items: center; gap: 8px; }
+  .picker h3 i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .picker button { display: block; width: 100%; text-align: left; background: none; border: 0; border-left: 2px solid transparent; padding: 4px 8px; font: inherit; font-size: 15px; color: var(--ink); cursor: pointer; }
+  .picker button:hover { background: rgba(22,37,58,.05); }
+  .picker button[aria-pressed="true"] { border-left-color: var(--ink); font-weight: 600; }
+  .picker button em { font-style: normal; color: var(--muted); font-size: 13px; }
+
+  .detail { margin-top: 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; min-height: 180px; }
+  .detail .meta { font-size: 14px; color: var(--muted); margin: 0 0 4px; }
+  .detail h2 { font-family: Sora, sans-serif; font-size: 23px; line-height: 1.2; margin: 0 0 10px; }
+  .detail p { margin: 0 0 12px; max-width: 70ch; }
+  .detail .nums { display: flex; flex-wrap: wrap; gap: 26px; margin: 4px 0 12px; }
+  .detail .nums div b { display: block; font-family: Sora, sans-serif; font-size: 26px; line-height: 1.1; }
+  .detail .nums div span { font-size: 14px; color: var(--muted); }
+  .badge { display: inline-block; font-size: 13px; font-weight: 600; padding: 2px 9px; border-radius: 999px; margin-left: 8px; vertical-align: 2px; }
+  .badge.del { background: #DDEBE8; color: #11665A; }
+  .badge.sim { background: #F6E7C8; color: #7A5410; }
+
+  section.block { padding: 64px 0 8px; }
+  h2.sec { font-family: Sora, sans-serif; font-size: 30px; letter-spacing: -0.01em; margin: 0 0 8px; }
+  .sec-intro { color: var(--muted); max-width: 60ch; margin: 0 0 26px; }
+
+  table.results { width: 100%; border-collapse: collapse; }
+  table.results td { padding: 14px 10px 14px 0; border-top: 1px solid var(--line); vertical-align: top; }
+  table.results td.n { font-family: Sora, sans-serif; font-weight: 700; font-size: 26px; white-space: nowrap; width: 1%; padding-right: 28px; }
+  table.results td.w { color: var(--muted); font-size: 16px; text-align: right; white-space: nowrap; }
+
+  ol.method { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  ol.method li { counter-increment: s; border-top: 3px solid var(--ink); padding-top: 12px; }
+  ol.method li::before { content: counter(s); font-family: Sora, sans-serif; font-weight: 700; color: var(--muted); font-size: 15px; }
+  ol.method h3 { font-family: Sora, sans-serif; font-size: 19px; margin: 4px 0 6px; }
+  ol.method p { margin: 0; font-size: 16px; color: var(--muted); }
+
+  .creds { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .creds ul { list-style: none; margin: 0; padding: 0; }
+  .creds li { padding: 9px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; font-size: 16px; }
+
+  footer { margin-top: 70px; padding: 30px 0 40px; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
+  footer .contact { font-family: Sora, sans-serif; font-size: 22px; color: var(--ink); margin: 0 0 6px; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    #scene { height: 380px; }
+    .picker { grid-template-columns: 1fr; }
+    ol.method { grid-template-columns: 1fr 1fr; }
+    .creds { grid-template-columns: 1fr; }
+    nav.top a { margin: 0 16px 0 0; }
+    table.results td.w { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="who">Hope Ocholi, PMP <span>Dublin, Ireland</span></div>
+    <nav class="top" aria-label="Page sections">
+      <a href="#results">Results</a><a href="#method">How I work</a><a href="#credentials">Credentials</a><a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1>I take data and AI from business case to production, and keep it governed.</h1>
+        <p class="lede">Technical Project Manager with 7+ years in technology delivery and 4+ years leading data, cloud and AI projects with third-party providers. PMP and PRINCE2 Practitioner. Available for a 12-month contract.</p>
+        <div class="actions">
+          <a class="btn primary" href="mailto:hope.ochos@gmail.com">Email Hope</a>
+          <a class="btn" href="https://www.notion.so/4072a004d112810a8c0fc8f9991b1ffc">Open the Notion portfolio</a>
+          <a class="btn" href="https://www.linkedin.com/in/hopeocholi/">View LinkedIn</a>
+        </div>
+        <ul class="facts">
+          <li><span>Admissions queries answered by AI</span><b>80%</b></li>
+          <li><span>Staff time saved by document automation</span><b>22 hours a week</b></li>
+          <li><span>IT costs cut on a €200k budget</span><b>40%</b></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="stage">
+          <canvas id="scene" aria-label="3D stack of projects in three layers: data and cloud foundations, data and AI in production, and governance and practice. Use the project list below to explore with a keyboard."></canvas>
+          <div class="tier-label" id="lbl0" style="color:var(--found)">Data and cloud foundations</div>
+          <div class="tier-label" id="lbl1" style="color:var(--ai)">Data and AI in production</div>
+          <div class="tier-label" id="lbl2" style="color:var(--practice)">Governance and practice</div>
+          <div class="hint">Drag to turn. Select a block to see the project.</div>
+          <div class="legend"><span><i class="solid"></i>Delivered</span><span><i class="wire"></i>Simulation</span></div>
+        </div>
+        <div class="picker" id="picker"></div>
+        <div class="detail" id="detail" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <section class="block" id="results">
+      <h2 class="sec">Results</h2>
+      <p class="sec-intro">Measured from system data before and after go-live, or from budget records.</p>
+      <table class="results">
+        <tr><td class="n">80%</td><td>of admissions queries answered by an Azure OpenAI assistant</td><td class="w">AI admissions assistant</td></tr>
+        <tr><td class="n">2 days to under 1 minute</td><td>first response time for prospective students</td><td class="w">AI admissions assistant</td></tr>
+        <tr><td class="n">5,300</td><td>student applications a year processed with Azure AI Document Intelligence</td><td class="w">Application data extraction</td></tr>
+        <tr><td class="n">22 hours</td><td>of staff time saved every week</td><td class="w">Application data extraction</td></tr>
+        <tr><td class="n">27%</td><td>better intake planning accuracy from an Azure ML forecast</td><td class="w">Intake forecast</td></tr>
+        <tr><td class="n">40%</td><td>cut in IT costs on a €200k technology budget</td><td class="w">Budget and vendor governance</td></tr>
+        <tr><td class="n">3 systems</td><td>moved to Microsoft Azure with services running through two intake peaks a year</td><td class="w">Azure data migration</td></tr>
+      </table>
+    </section>
+
+    <section class="block" id="method">
+      <h2 class="sec">How I work</h2>
+      <p class="sec-intro">Just enough process to keep control, never so much that it slows the team down.</p>
+      <ol class="method">
+        <li><h3>Start with the case</h3><p>A short business case and a clear use case before any build, so the decision to start is a real one.</p></li>
+        <li><h3>Govern in proportion</h3><p>Light controls for small changes, phase gates for big ones, and AI risk checks with human review where models are involved.</p></li>
+        <li><h3>Report honestly</h3><p>One status view for leadership: progress, risks, issues and decisions needed, from the same RAID log every week.</p></li>
+        <li><h3>Learn on purpose</h3><p>Lessons learned at every stage end, and each one changes a template or checklist for the next project.</p></li>
+      </ol>
+    </section>
+
+    <section class="block" id="credentials">
+      <h2 class="sec">Credentials</h2>
+      <div class="creds">
+        <ul>
+          <li><span>Project Management Professional (PMP)</span><a href="https://www.credly.com/badges/a073f009-6033-4912-8b8f-203d0a4eb636/public_url">Verify</a></li>
+          <li><span>PRINCE2 Practitioner</span><a href="https://badges.peoplecert.org/Badge/en/2/CF7DF35A-7751-4D4A-ACE0-1652C450B1B8?685">Verify</a></li>
+          <li><span>Microsoft Azure Administrator (AZ-104)</span><a href="https://learn.microsoft.com/en-us/users/HopeOcholi-1013/credentials/E9FD1E8052419D49?ref=https%3A%2F%2Fwww.linkedin.com%2F">Verify</a></li>
+          <li><span>ITIL 4 Foundation</span><a href="https://badges.peoplecert.org/Badge/en/2/BC75F453-153C-47EC-88DD-6F8EB695F8DF?521">Verify</a></li>
+          <li><span>SAP Certified: Data Analyst, SAP Analytics Cloud</span><a href="https://www.credly.com/badges/c4de6944-5538-414f-9956-3f5b80debcf9/public_url">Verify</a></li>
+          <li><span>SAP Certified: Positioning SAP Business AI Platform</span><a href="https://www.credly.com/badges/262f3961-a373-4d35-8d43-e3bb0f8554b7/public_url">Verify</a></li>
+        </ul>
+        <ul>
+          <li><span>MSc in FinTech, First Class Honours</span><span>National College of Ireland, 2026</span></li>
+          <li><span>Dissertation: explainable, fair fraud detection under the EU AI Act</span><span>LightGBM, SHAP</span></li>
+          <li><span>MSc in Business Administration</span><span>University of Stavanger, 2024</span></li>
+          <li><span>BTech</span><span>Federal University of Technology, Owerri, 2019</span></li>
+          <li><span>Member</span><span>PMI Ireland Chapter</span></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <p class="contact"><a href="mailto:hope.ochos@gmail.com">hope.ochos@gmail.com</a> &nbsp;|&nbsp; +353 89 947 9803</p>
+    <p>Simulation projects are set in fictional organisations and are labelled on every page. Full case studies are in the <a href="https://www.notion.so/4072a004d112810a8c0fc8f9991b1ffc">Notion portfolio</a>.</p>
+  </footer>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+const N = (id) => "https://www.notion.so/" + id;
+const TIERS = [
+  { name: "Data and cloud foundations", color: 0x3E6A8C, css: "var(--found)" },
+  { name: "Data and AI in production", color: 0x1C9C8A, css: "var(--ai)" },
+  { name: "Governance and practice", color: 0xC98A1E, css: "var(--practice)" },
+];
+const P = [
+  { t: 0, h: 1.0, name: "Azure data migration", org: "Michael Educational Consults", sim: false,
+    text: "Led the data migration of three core systems, the CRM, student portal and document storage, to Microsoft Azure, from business case to go-live.",
+    nums: [["3", "core systems moved"], ["2", "intake peaks a year kept running"]], link: N("4072a004d11281dca736c43410e46e9a") },
+  { t: 0, h: 1.2, name: "Budget and vendor governance", org: "Michael Educational Consults", sim: false,
+    text: "Control the technology budget through monthly forecasting, spend approvals and licence consolidation, and hold two key third-party providers to their SLAs.",
+    nums: [["€200k", "technology budget"], ["40%", "IT cost cut"]], link: N("4072a004d112811eaa3deb51546344ad") },
+  { t: 0, h: 0.7, name: "Microsoft 365 and Entra ID", org: "Michael Educational Consults", sim: false,
+    text: "Rolled out Microsoft 365 and Entra ID with SSO and MFA, standardising onboarding to drive adoption and support GDPR.",
+    nums: [], link: N("4072a004d11281dca736c43410e46e9a") },
+  { t: 0, h: 0.8, name: "Checkout and payment gateway", org: "Opago Global", sim: false,
+    text: "Led requirements for checkout and payments projects, including a third-party payment gateway integration, with full traceability from requirement to test.",
+    nums: [], link: N("4072a004d11281baabd6dc1e5399df75") },
+  { t: 0, h: 0.6, name: "Revenue and fulfilment reporting", org: "Opago Global", sim: false,
+    text: "Built SQL and Excel reporting on revenue, conversion and fulfilment, investigating variances and recommending corrective actions to management.",
+    nums: [], link: N("4072a004d11281f3a404d332dc424dcc") },
+  { t: 1, h: 1.5, name: "AI admissions assistant", org: "Michael Educational Consults", sim: false,
+    text: "Led delivery of an Azure OpenAI assistant that answers prospective students' questions, built by a mix of vendor and in-house staff in 3 to 6 months.",
+    nums: [["80%", "of queries answered"], ["Under 1 min", "first response, down from 2 days"]], link: N("40f2a004d112813e8c3cf46f24eeda9a") },
+  { t: 1, h: 1.3, name: "Application data extraction", org: "Michael Educational Consults", sim: false,
+    text: "Led delivery of automated data extraction from student applications with Azure AI Document Intelligence, so staff check data rather than retype it.",
+    nums: [["5,300", "applications a year"], ["22 hours", "saved every week"]], link: N("40f2a004d112816f9a7bce865c7afabb") },
+  { t: 1, h: 1.1, name: "Intake forecast", org: "Michael Educational Consults", sim: false,
+    text: "Led delivery of an application-volume forecast in Azure Machine Learning, with results in Power BI, to plan capacity ahead of each intake peak.",
+    nums: [["27%", "better planning accuracy"]], link: N("40f2a004d11281a8b4affc76860b7908") },
+  { t: 2, h: 0.9, name: "AI governance", org: "Michael Educational Consults", sim: false,
+    text: "Set up AI governance aligned with the EU AI Act and GDPR: risk assessments, human review of outputs and model monitoring.",
+    nums: [], link: N("40f2a004d11281029485c5e7d04c2a84") },
+  { t: 2, h: 0.8, name: "PM toolkit", org: "Practice", sim: false,
+    text: "Thirteen artefacts I use in practice, from business case and RACI to change control and lessons learned, each linked to an example.",
+    nums: [["13", "artefacts"]], link: N("4072a004d112811583a5fefb5d9959f3") },
+  { t: 2, h: 1.0, name: "Project Tidewatch", org: "Northquay Bank (fictional)", sim: true,
+    text: "A simulated AML monitoring model and AI investigator copilot on synthetic data, with stage gates, a RACI, earned value and a 15-item risk register.",
+    nums: [["15", "risks in the register"]], link: N("4072a004d11281e0a52dddd0f9e7c32e") },
+  { t: 2, h: 0.7, name: "Project Keystone", org: "Kestrel Software Support (fictional)", sim: true,
+    text: "A simulated plan for embedding lightweight project practices in a scaling software company: intake, proportionate governance, standard reporting and a critical-bug route.",
+    nums: [["12", "week plan"]], link: N("40f2a004d1128110b95afde8a59a528f") },
+  { t: 2, h: 0.75, name: "Project Beacon", org: "Kestrel Software Support (fictional)", sim: true,
+    text: "A simulated, governed pilot of AI-assisted ticket triage with a third-party partner, ending at a go or no-go gate.",
+    nums: [["10", "week pilot plan"]], link: N("40f2a004d11281979fd4e30ce5b0a9a0") },
+];
+
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const canvas = document.getElementById("scene");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 200);
+camera.position.set(14, 13.5, 16);
+const controls = new OrbitControls(camera, canvas);
+controls.target.set(0.6, 3.0, 0);
+controls.enableDamping = true; controls.enablePan = false; controls.enableZoom = false;
+controls.minPolarAngle = 0.5; controls.maxPolarAngle = 1.35;
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0xC9D3DD, 1.1));
+const sun = new THREE.DirectionalLight(0xffffff, 1.4); sun.position.set(8, 16, 10); scene.add(sun);
+
+const GAP = 3.2, W = 11, D = 4.4;
+const tierGroups = [], blocks = [];
+TIERS.forEach((tier, i) => {
+  const g = new THREE.Group(); g.userData.y = i * GAP; g.position.y = i * GAP;
+  const slab = new THREE.Mesh(new THREE.BoxGeometry(W, 0.28, D),
+    new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 }));
+  g.add(slab);
+  const edge = new THREE.LineSegments(new THREE.EdgesGeometry(slab.geometry), new THREE.LineBasicMaterial({ color: tier.color }));
+  g.add(edge);
+  const items = P.filter(p => p.t === i);
+  const step = W / (items.length + 1);
+  items.forEach((p, k) => {
+    const size = 1.45;
+    const geo = new THREE.BoxGeometry(size, p.h, size);
+    let mesh;
+    if (p.sim) {
+      mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: tier.color, transparent: true, opacity: 0.12 }));
+      mesh.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({ color: tier.color })));
+    } else {
+      mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: tier.color, roughness: 0.55, metalness: 0.05 }));
+    }
+    mesh.position.set(-W / 2 + step * (k + 1), 0.14 + p.h / 2, 0);
+    mesh.userData = { p, base: mesh.position.y };
+    p.mesh = mesh; blocks.push(mesh); g.add(mesh);
+  });
+  scene.add(g); tierGroups.push(g);
+});
+
+// Picker list (keyboard accessible)
+const picker = document.getElementById("picker");
+TIERS.forEach((tier, i) => {
+  const col = document.createElement("div");
+  col.innerHTML = `<h3><i style="background:${tier.css}"></i>${tier.name}</h3>`;
+  P.filter(p => p.t === i).forEach(p => {
+    const b = document.createElement("button");
+    b.type = "button"; b.setAttribute("aria-pressed", "false");
+    b.innerHTML = p.name + (p.sim ? ' <em>simulation</em>' : "");
+    b.addEventListener("click", () => select(p));
+    p.btn = b; col.appendChild(b);
+  });
+  picker.appendChild(col);
+});
+
+const detail = document.getElementById("detail");
+let current = null;
+function select(p) {
+  current = p;
+  P.forEach(q => q.btn.setAttribute("aria-pressed", q === p ? "true" : "false"));
+  const badge = p.sim ? '<span class="badge sim">Simulation</span>' : '<span class="badge del">Delivered</span>';
+  const nums = p.nums.length ? `<div class="nums">${p.nums.map(n => `<div><b>${n[0]}</b><span>${n[1]}</span></div>`).join("")}</div>` : "";
+  detail.innerHTML = `<p class="meta">${TIERS[p.t].name} | ${p.org}</p><h2>${p.name}${badge}</h2>${nums}<p>${p.text}</p><a href="${p.link}">Read the full case study in Notion</a>`;
+}
+select(P[5]);
+
+// Hover and click on blocks
+const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
+let hovered = null, downAt = null;
+function pick(e) {
+  const r = canvas.getBoundingClientRect();
+  mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+  mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+  ray.setFromCamera(mouse, camera);
+  const hit = ray.intersectObjects(blocks, false)[0];
+  return hit ? hit.object : null;
+}
+canvas.addEventListener("pointermove", e => { hovered = pick(e); canvas.style.cursor = hovered ? "pointer" : "grab"; });
+canvas.addEventListener("pointerdown", e => { downAt = [e.clientX, e.clientY]; });
+canvas.addEventListener("pointerup", e => {
+  if (!downAt) return;
+  const moved = Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]);
+  downAt = null;
+  if (moved < 6) { const m = pick(e); if (m) select(m.userData.p); }
+});
+
+// Tier labels follow the slabs
+const labels = [0, 1, 2].map(i => document.getElementById("lbl" + i));
+const v = new THREE.Vector3();
+function placeLabels() {
+  const r = canvas.getBoundingClientRect();
+  tierGroups.forEach((g, i) => {
+    v.set(-W / 2 + 0.4, g.position.y + 0.1, D / 2 + 0.3).project(camera);
+    labels[i].style.left = ((v.x + 1) / 2 * r.width) + "px";
+    labels[i].style.top = ((-v.y + 1) / 2 * r.height + 18) + "px";
+  });
+}
+
+function resize() {
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+}
+window.addEventListener("resize", resize); resize();
+
+// One orchestrated moment: the three layers settle into place, bottom first
+const t0 = performance.now();
+const ease = x => 1 - Math.pow(1 - x, 3);
+function tick(now) {
+  const t = (now - t0) / 1000;
+  tierGroups.forEach((g, i) => {
+    const local = reduce ? 1 : Math.min(Math.max((t - i * 0.35) / 0.9, 0), 1);
+    g.position.y = g.userData.y + (1 - ease(local)) * 7;
+    g.visible = local > 0;
+  });
+  blocks.forEach(m => {
+    const target = m.userData.base + ((m === hovered || m.userData.p === current) ? 0.35 : 0);
+    m.position.y += (target - m.position.y) * 0.15;
+  });
+  controls.update(); renderer.render(scene, camera); placeLabels();
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
