@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hope Ocholi Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a living delivery network as the hero, then a ledger of projects, then one deep project file (Tidewatch) read like a gate pack. */
+:root{
+  --bg:#ECF0EE; --surface:#F7F9F8; --sunk:#E1E7E4; --ink:#10202B; --muted:#4E5E67; --line:#C6D0CC;
+  --accent:#B9652A; --tide:#1D6A73; --tide-soft:#D3E6E6; --accent-soft:#F1DFCF;
+  --crit:#B03E2C; --high:#CB7429; --med:#BF9A2F; --low:#4F8A5B;
+  --display:"Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --body:"Newsreader", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --step--1:clamp(.8rem,.78rem + .1vw,.86rem); --step0:clamp(1.02rem,.98rem + .2vw,1.12rem);
+  --step1:clamp(1.25rem,1.15rem + .45vw,1.5rem); --step2:clamp(1.6rem,1.4rem + 1vw,2.2rem);
+  --step3:clamp(2.3rem,1.8rem + 2.6vw,4.4rem);
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C151B; --surface:#121E26; --sunk:#0F1A21; --ink:#E2E9E6; --muted:#97A7AC; --line:#26363E;
+  --accent:#E39A57; --tide:#5BB7BB; --tide-soft:#173339; --accent-soft:#33261B;
+  --crit:#E2705C; --high:#E39A4C; --med:#D6BA5C; --low:#7FBF8A; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0C151B; --surface:#121E26; --sunk:#0F1A21; --ink:#E2E9E6; --muted:#97A7AC; --line:#26363E;
+  --accent:#E39A57; --tide:#5BB7BB; --tide-soft:#173339; --accent-soft:#33261B;
+  --crit:#E2705C; --high:#E39A4C; --med:#D6BA5C; --low:#7FBF8A; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:var(--step0);line-height:1.6;}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.015em}
+p{margin:0}
+a{color:var(--tide)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.eyebrow{font-family:var(--mono);font-size:var(--step--1);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ---------- top bar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--bg)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.mark{font-family:var(--display);font-weight:700;letter-spacing:-.01em;font-size:1.05rem;color:var(--ink);text-decoration:none;display:flex;gap:10px;align-items:center}
+.mark i{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.bar nav{display:flex;gap:18px;flex-wrap:wrap}
+.bar nav a{font-family:var(--display);font-size:.92rem;color:var(--muted);text-decoration:none}
+.bar nav a:hover{color:var(--ink)}
+@media (max-width:640px){.bar nav{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+#net{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:pan-y}
+#net.drag{cursor:grabbing}
+.labels{position:absolute;inset:0;pointer-events:none}
+.nlabel{position:absolute;transform:translate(14px,-50%);font-family:var(--mono);font-size:.72rem;white-space:nowrap;color:var(--ink);background:color-mix(in srgb,var(--surface) 82%,transparent);border:1px solid var(--line);padding:2px 7px;border-radius:999px;transition:opacity .2s}
+.nlabel.on{border-color:var(--accent);color:var(--accent)}
+.hero-copy{position:relative;z-index:2;pointer-events:none;padding-block:clamp(56px,9vw,112px) clamp(40px,6vw,72px);display:grid;gap:22px;max-width:640px}
+.hero-copy *{pointer-events:auto}
+.hero h1{font-size:var(--step3);font-weight:700}
+.hero h1 span{display:block;font-family:var(--body);font-style:italic;font-weight:400;font-size:.42em;letter-spacing:0;color:var(--muted);margin-top:.5em}
+.lede{font-size:var(--step1);line-height:1.45;max-width:34ch;background:color-mix(in srgb,var(--bg) 70%,transparent)}
+.stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:6px}
+.stat b{display:block;font-family:var(--display);font-size:var(--step2);font-weight:600;line-height:1}
+.stat small{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.hint{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font-family:var(--display);font-weight:600;font-size:.95rem;border-radius:999px;padding:10px 18px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:hover{transform:translateY(-1px)}
+@media (max-width:720px){.hero-copy{padding-top:300px}.lede{max-width:none}}
+
+/* ---------- sections ---------- */
+section{padding-block:clamp(56px,8vw,96px)}
+.shead{display:grid;gap:12px;margin-bottom:32px;max-width:720px}
+.shead h2{font-size:var(--step2);font-weight:600}
+.shead p{color:var(--muted)}
+
+/* projects */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{font-family:var(--mono);font-size:.76rem;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);background:var(--sunk)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+@media (max-width:400px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:12px;min-width:0;transform-style:preserve-3d;transition:transform .25s ease,border-color .25s;will-change:transform}
+.card:hover{border-color:var(--tide)}
+.card.flash{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.card .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.card h3{font-size:1.22rem;font-weight:600}
+.meta{font-family:var(--mono);font-size:.74rem;color:var(--muted);line-height:1.5}
+.pill{flex:none;font-family:var(--mono);font-size:.68rem;padding:3px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.delivered{color:var(--low)} .pill.ongoing{color:var(--tide)} .pill.baselined{color:var(--accent)}
+.card p.head{font-size:1rem}
+.card details{border-top:1px solid var(--line);padding-top:10px}
+.card summary{font-family:var(--display);font-size:.9rem;font-weight:600;cursor:pointer;color:var(--tide);list-style:none}
+.card summary::-webkit-details-marker{display:none}
+.card summary::after{content:" +";}
+.card details[open] summary::after{content:" \2212"}
+.card ul{margin:10px 0 0;padding-left:1.1em;display:grid;gap:6px;font-size:.96rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.tags span{font-family:var(--mono);font-size:.68rem;color:var(--muted);background:var(--sunk);padding:2px 8px;border-radius:4px}
+.card[hidden]{display:none}
+
+/* tidewatch */
+.tw{background:var(--sunk);border-block:1px solid var(--line)}
+.notice{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:var(--radius);padding:14px 16px;font-size:.95rem;max-width:820px}
+.notice b{font-family:var(--display)}
+.twgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin-top:28px}
+.panel{grid-column:span 12;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;min-width:0;display:grid;gap:14px;align-content:start}
+.panel h3{font-size:1.1rem;font-weight:600}
+.panel .sub{color:var(--muted);font-size:.95rem}
+.half{grid-column:span 6}
+@media (max-width:860px){.half{grid-column:span 12}}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.fact b{display:block;font-family:var(--display);font-size:1.5rem;font-weight:600;line-height:1.1}
+.fact small{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+
+/* gantt */
+.scroll{overflow-x:auto}
+.gantt{min-width:720px;display:grid;grid-template-columns:200px repeat(20,1fr);font-family:var(--mono);font-size:.72rem;row-gap:6px;position:relative}
+.gantt .wk{color:var(--muted);text-align:center;border-bottom:1px solid var(--line);padding-bottom:4px}
+.gantt .ph{color:var(--ink);padding-right:8px;align-self:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gantt .b{height:18px;border-radius:4px;align-self:center}
+.b.dm{background:var(--tide)} .b.ag{background:var(--accent)} .b.as{background:var(--low)} .b.pm{background:var(--muted)}
+.gantt .gate{align-self:center;justify-self:center;width:12px;height:12px;background:var(--ink);transform:rotate(45deg);position:relative}
+.gantt .gate span{position:absolute;top:14px;left:50%;transform:rotate(-45deg) translate(-50%,0);transform-origin:left top}
+.gates-row{color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.today{position:absolute;top:0;bottom:0;width:2px;background:var(--crit);opacity:.7}
+
+/* heat map */
+.heat{display:grid;grid-template-columns:auto repeat(5,1fr);gap:4px;font-family:var(--mono);font-size:.68rem}
+.heat .ax{color:var(--muted);display:flex;align-items:center;justify-content:center;text-align:center;padding:2px}
+.heat .c{min-height:52px;border-radius:4px;padding:4px;display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start;position:relative}
+.heat .c em{position:absolute;right:4px;bottom:2px;font-style:normal;opacity:.5}
+.c.low{background:color-mix(in srgb,var(--low) 22%,var(--surface))}
+.c.med{background:color-mix(in srgb,var(--med) 28%,var(--surface))}
+.c.high{background:color-mix(in srgb,var(--high) 30%,var(--surface))}
+.c.crit{background:color-mix(in srgb,var(--crit) 32%,var(--surface))}
+.rk{border:1px solid var(--ink);background:var(--surface);color:var(--ink);border-radius:3px;padding:0 4px;cursor:help;font:inherit}
+.rk[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.riskout{min-height:3.2em;font-size:.95rem;border-left:3px solid var(--accent);padding-left:12px}
+
+/* bars */
+.stack{display:flex;height:22px;border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.stack div{height:100%}
+.keys{display:grid;gap:6px;font-size:.92rem}
+.keys div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:4px}
+.keys span:first-child{display:flex;gap:8px;align-items:center}
+.keys i{width:10px;height:10px;border-radius:2px;flex:none}
+
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.decisions{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.decisions div{border-top:2px solid var(--tide);padding-top:10px;font-size:.96rem}
+.decisions b{display:block;font-family:var(--display);margin-bottom:4px}
+
+/* how I work */
+.principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:24px}
+.principles h3{font-size:1.15rem;font-weight:600;margin-bottom:8px}
+.principles .tool{font-family:var(--mono);font-size:.72rem;color:var(--accent);margin-bottom:6px}
+.principles p{color:var(--muted);font-size:.98rem}
+
+/* credentials */
+.creds{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px}
+.creds ul{list-style:none;padding:0;margin:0;display:grid;gap:0}
+.creds li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.98rem}
+.creds li small{font-family:var(--mono);font-size:.72rem;color:var(--muted);white-space:nowrap}
+
+/* contact */
+.contact{background:var(--ink);color:var(--bg)}
+.contact .wrap{display:grid;gap:22px}
+.contact h2{font-size:var(--step3);font-weight:700;max-width:16ch}
+.lines{display:flex;flex-wrap:wrap;gap:12px}
+.line{display:flex;align-items:center;gap:10px;border:1px solid color-mix(in srgb,var(--bg) 30%,transparent);border-radius:999px;padding:8px 8px 8px 16px;font-family:var(--mono);font-size:.9rem;user-select:all}
+.line button{font-family:var(--display);font-size:.8rem;border:0;border-radius:999px;padding:5px 12px;background:var(--bg);color:var(--ink);cursor:pointer;user-select:none}
+.line a{color:var(--bg)}
+footer{padding-block:20px;font-family:var(--mono);font-size:.72rem;color:var(--muted);text-align:center}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}.btn:hover{transform:none}}
+</style>
+
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="mark" href="#top"><i></i>Hope Ocholi</a>
+    <nav aria-label="Sections">
+      <a href="#projects">Projects</a>
+      <a href="#tidewatch">Tidewatch</a>
+      <a href="#method">How I work</a>
+      <a href="#credentials">Credentials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <canvas id="net" aria-label="Interactive 3D network. Each bright node is a project; select one to jump to its case study."></canvas>
+  <div class="labels" id="labels" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">Senior Technical Project Manager · Dublin</p>
+      <h1>Hope Ocholi<span>PMP, PRINCE2 Practitioner, Azure Administrator</span></h1>
+      <p class="lede">I take technical work that nobody can fully describe yet and give it a plan people can hold to: a baseline they believe, risks with owners, and reporting a director can act on the same day.</p>
+      <div class="stats">
+        <div class="stat"><b class="mono">4+</b><small>years leading technical programmes</small></div>
+        <div class="stat"><b class="mono">€200k</b><small>IT budget, costs cut by 40%</small></div>
+        <div class="stat"><b class="mono">7</b><small>projects in this portfolio</small></div>
+      </div>
+      <div class="cta">
+        <a class="btn" href="#projects">See the work</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+      <p class="hint">Drag to turn the network. Bright nodes are projects; select one to jump to it.</p>
+    </div>
+  </div>
+</div>
+
+<main>
+<section id="projects">
+  <div class="wrap">
+    <div class="shead">
+      <p class="eyebrow">Project ledger</p>
+      <h2>Seven projects, one way of working</h2>
+      <p>Cloud migrations, network builds, vendor programmes and payments work, delivered over four years in Ireland and Nigeria. Each card opens to the work itself, described in the words I use on my CV.</p>
+    </div>
+    <div class="chips" role="group" aria-label="Filter projects">
+      <button class="chip" id="f-all" data-f="all" aria-pressed="true">All</button>
+      <button class="chip" id="f-cloud" data-f="cloud" aria-pressed="false">Cloud and infrastructure</button>
+      <button class="chip" id="f-gov" data-f="gov" aria-pressed="false">Budget and vendors</button>
+      <button class="chip" id="f-pay" data-f="pay" aria-pressed="false">Payments and financial crime</button>
+      <button class="chip" id="f-data" data-f="data" aria-pressed="false">Data and AI</button>
+    </div>
+
+    <div class="grid" id="cards">
+      <article class="card" id="p1" data-tags="pay data gov">
+        <div class="top"><h3>Project Tidewatch</h3><span class="pill baselined">Baselined</span></div>
+        <p class="meta">Northquay Bank (fictional) · PM and PID author; co-lead data engineer · Oct 2026 to Mar 2027</p>
+        <p class="head">A graph-enhanced AML model and an AI Investigator Copilot that recommends while a human decides. Full governance stack, from PID to a 20-step data build.</p>
+        <details><summary>What it covers</summary>
+          <ul>
+            <li>20 working weeks, seven stage gates, EUR 242,305 budget with contingency and reserve.</li>
+            <li>15 baseline risks with owners, a RACI across eight roles, and success criteria with thresholds and targets.</li>
+            <li>Portfolio simulation on public synthetic data. See the full project file below.</li>
+          </ul>
+        </details>
+        <div class="tags"><span>Hybrid PRINCE2 and Scrum</span><span>Databricks</span><span>MLflow</span><span>EU AMLR</span></div>
+      </article>
+
+      <article class="card" id="p2" data-tags="cloud">
+        <div class="top"><h3>Azure cloud migration</h3><span class="pill delivered">Delivered</span></div>
+        <p class="meta">Michael Educational Consults · Project Manager (Remote) · Aug 2022 to Sept 2026</p>
+        <p class="head">The CRM, application portal and document storage moved to Azure, with service protected through the September and January intake peaks.</p>
+        <details><summary>What I did</summary>
+          <ul>
+            <li>Delivered the Azure migration of the CRM, application portal and document storage from business case and PID to go-live, owning scope, WBS, schedule baseline and cutover.</li>
+            <li>Controlled performance with earned value (SPI, CPI), escalated exceptions when delivery drifted and enforced formal change control on every scope change.</li>
+            <li>Owned the risk and issue registers, securing service continuity through the September and January intake peaks with capacity planning and load testing.</li>
+            <li>Closed each project with an end project report and lessons learned review, and led day-to-day delivery with Scrum in Microsoft Teams and Azure DevOps.</li>
+          </ul>
+        </details>
+        <div class="tags"><span>Azure</span><span>Azure DevOps</span><span>Entra ID</span><span>MS Project</span></div>
+      </article>
+
+      <article class="card" id="p3" data-tags="cloud">
+        <div class="top"><h3>Network deployment</h3><span class="pill delivered">Delivered</span></div>
+        <p class="meta">Michael Educational Consults · Project Manager (Remote) · Aug 2022 to Sept 2026</p>
+        <p class="head">Azure virtual networks, a site-to-site VPN and access controls, built in stages so that no stage started before the last one was signed off.</p>
+        <details><summary>What I did</summary>
+          <ul>
+            <li>Governed the network deployment in management stages (Azure virtual networks, site-to-site VPN, access controls), approving progression only after formal stage review and sign-off.</li>
+          </ul>
+        </details>
+        <div class="tags"><span>VNets</span><span>VPN Gateway</span><span>NSGs</span><span>Stage gates</span></div>
+      </article>
+
+      <article class="card" id="p4" data-tags="cloud gov">
+        <div class="top"><h3>Dublin office installation</h3><span class="pill delivered">Delivered</span></div>
+        <p class="meta">Michael Educational Consults · Project Manager (Remote) · Aug 2022 to Sept 2026</p>
+        <p class="head">An onsite installation directed from a distance, where the result depended on how precise the instructions and the checks were.</p>
+        <details><summary>What I did</summary>
+          <ul>
+            <li>Directed the Dublin office installation remotely, issuing work packages to the provider's onsite technicians, holding daily checkpoints and signing off against acceptance criteria.</li>
+            <li>Led the company's cloud and IT program fully remotely, aligning directors, staff and external vendors across locations and time zones.</li>
+          </ul>
+        </details>
+        <div class="tags"><span>Work packages</span><span>Acceptance criteria</span><span>Smart hands</span></div>
+      </article>
+
+      <article class="card" id="p5" data-tags="gov cloud">
+        <div class="top"><h3>IT programme, budget and vendors</h3><span class="pill ongoing">Ongoing</span></div>
+        <p class="meta">Michael Educational Consults · Senior Project Manager · Sept 2026 to present</p>
+        <p class="head">One person accountable to the directors for the whole IT programme, with a €200k budget run through monthly forecasts and approval gates.</p>
+        <details><summary>What I do</summary>
+          <ul>
+            <li>Own the IT infrastructure program on site, setting direction, priorities and delivery standards across cloud, network and vendor workstreams.</li>
+            <li>Control a €200k IT budget through monthly forecasting and approval gates on spend, cutting costs by 40%.</li>
+            <li>Serve as the directors' single point of accountability for delivery, reporting to them as project board and escalating deviations beyond tolerance before they affect the business.</li>
+            <li>Set procurement strategy for cloud, licensing and hardware, and hold the IT provider and development agency to account against their SLAs.</li>
+          </ul>
+        </details>
+        <div class="tags"><span>Forecasting</span><span>SLAs</span><span>QBRs</span><span>Procurement</span></div>
+      </article>
+
+      <article class="card" id="p6" data-tags="pay">
+        <div class="top"><h3>Checkout and payment gateway</h3><span class="pill delivered">Delivered</span></div>
+        <p class="meta">Opago Global Limited · Senior Business Analyst · Mar 2021 to Jul 2022</p>
+        <p class="head">Requirements for checkout and payments, including a third-party gateway integration, traced from every requirement to its test.</p>
+        <details><summary>What I did</summary>
+          <ul>
+            <li>Led requirements for checkout and payments projects, including a third-party payment gateway integration, with full traceability from requirement to test.</li>
+            <li>Drove readiness for peak sales campaigns by identifying risks early and coordinating capacity and load testing with engineering.</li>
+            <li>Held delivery partners to their SLAs and briefed executives on options and trade-offs ahead of key decisions.</li>
+            <li>Mentored junior analysts and raised the standard of requirements documentation and UAT.</li>
+          </ul>
+        </details>
+        <div class="tags"><span>Traceability</span><span>UAT</span><span>Load testing</span></div>
+      </article>
+
+      <article class="card" id="p7" data-tags="data pay">
+        <div class="top"><h3>Revenue and KPI reporting</h3><span class="pill delivered">Delivered</span></div>
+        <p class="meta">Opago Global Limited · Financial Data Analyst · Mar 2019 to Mar 2021</p>
+        <p class="head">Where I learned that a number is only useful when people trust where it came from and know what to do about it.</p>
+        <details><summary>What I did</summary>
+          <ul>
+            <li>Built SQL and Excel reporting on revenue, conversion and fulfilment, investigating variances and recommending corrective actions to management.</li>
+            <li>Contributed to cost estimates, budgets and forecasts for operations and technology spend.</li>
+            <li>Produced weekly performance reports giving management a clear view of KPIs against target.</li>
+          </ul>
+        </details>
+        <div class="tags"><span>SQL</span><span>Excel</span><span>Power BI</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="tw" id="tidewatch">
+  <div class="wrap">
+    <div class="shead">
+      <p class="eyebrow">Project file · TW-PID-001 v1.0 · TW-DE-001 v2.0</p>
+      <h2>Project Tidewatch</h2>
+      <p>Banks still watch payments with rules that look at one account at a time. Launderers fan money out, gather it back and cycle it between banks. Tidewatch plans a graph-enhanced model to score every payment, and an AI copilot that gathers the evidence and drafts the case while an investigator makes the call. I wrote the PID, run the plan, and co-lead the data engineering with Chinelo Okeke.</p>
+    </div>
+    <p class="notice"><b>Portfolio simulation.</b> Northquay Bank and its committees are fictional. The data is the public, fully synthetic IBM AML collection with no real customers. The documents, plan and code are real work.</p>
+
+    <div class="twgrid">
+      <div class="panel">
+        <div class="facts">
+          <div class="fact"><b class="mono">20 wks</b><small>12 Oct 2026 to 12 Mar 2027</small></div>
+          <div class="fact"><b class="mono">G1 to G7</b><small>stage gates, PRINCE2 style</small></div>
+          <div class="fact"><b class="mono">€242,305</b><small>total budget</small></div>
+          <div class="fact"><b class="mono">304 days</b><small>across eight roles</small></div>
+          <div class="fact"><b class="mono">5.08M</b><small>synthetic transactions, 1 in 981 laundering</small></div>
+          <div class="fact"><b class="mono">F1 ≥ 0.55</b><small>target; published best is 0.63</small></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Schedule baseline</h3>
+        <p class="sub">Stage-gated governance with two-week sprints inside each stage. The year-end change freeze sits between weeks 10 and 11. The red line marks the plan calendar for this week.</p>
+        <div class="scroll"><div class="gantt" id="gantt"></div></div>
+        <div class="legend"><span><i style="background:var(--tide)"></i>Data and model</span><span><i style="background:var(--accent)"></i>Agent and integration</span><span><i style="background:var(--low)"></i>Independent assurance</span><span><i style="background:var(--muted)"></i>Project management</span><span><i style="background:var(--ink);transform:rotate(45deg)"></i>Stage gate</span></div>
+      </div>
+
+      <div class="panel half">
+        <h3>Risk register at baseline</h3>
+        <p class="sub">15 risks before mitigation: two critical, seven high, six medium. Select an ID to read it.</p>
+        <div class="heat" id="heat"></div>
+        <p class="riskout" id="riskout">R01 and R02 are the two critical risks. Both concern the integrity of what the project reports, and both are controlled by automated tests on every change and independent review at a gate.</p>
+      </div>
+
+      <div class="panel half">
+        <h3>Budget</h3>
+        <p class="sub">Built bottom-up by role and phase. Contingency sits with the PM; the reserve is released only by the Sponsor.</p>
+        <div class="stack" role="img" aria-label="Budget split: labour 194,700, non-labour 16,000, contingency 21,070, reserve 10,535 euro">
+          <div style="width:80.35%;background:var(--tide)"></div><div style="width:6.6%;background:var(--muted)"></div><div style="width:8.7%;background:var(--accent)"></div><div style="width:4.35%;background:var(--crit)"></div>
+        </div>
+        <div class="keys">
+          <div><span><i style="background:var(--tide)"></i>Labour, 304 days</span><span class="mono">194,700</span></div>
+          <div><span><i style="background:var(--muted)"></i>Non-labour</span><span class="mono">16,000</span></div>
+          <div><span><i style="background:var(--accent)"></i>Contingency, 10%</span><span class="mono">21,070</span></div>
+          <div><span><i style="background:var(--crit)"></i>Management reserve, 5%</span><span class="mono">10,535</span></div>
+          <div><span><b>Total, EUR</b></span><span class="mono"><b>242,305</b></span></div>
+        </div>
+        <p class="sub">Earned value against a EUR 210,700 baseline: each deliverable earns half its value at start and the rest on acceptance, with SPI and CPI reported every two weeks.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Success criteria, each with a line it can fail</h3>
+        <div class="scroll"><table>
+          <thead><tr><th>ID</th><th>Measure</th><th>Threshold</th><th>Target</th><th>Gate</th></tr></thead>
+          <tbody>
+            <tr><td class="n">K1</td><td>Minority-class F1 on the temporal test split</td><td class="n">≥ 0.45</td><td class="n">≥ 0.55</td><td class="n">G3, G4</td></tr>
+            <tr><td class="n">K5</td><td>Leakage and point-in-time tests passing in CI</td><td class="n">100%</td><td class="n">100%</td><td class="n">Every gate</td></tr>
+            <tr><td class="n">K8</td><td>Case summary facts traceable to a tool output</td><td class="n">≥ 95%</td><td class="n">≥ 98%</td><td class="n">G5, G6</td></tr>
+            <tr><td class="n">K9</td><td>Guardrail and red-team tests passed</td><td class="n">100%</td><td class="n">100%</td><td class="n">G5</td></tr>
+            <tr><td class="n">K10</td><td>Investigator time saved per case in UAT</td><td class="n">≥ 15%</td><td class="n">≥ 25%</td><td class="n">G6</td></tr>
+            <tr><td class="n">K12</td><td>SPI and CPI at each gate</td><td class="n">≥ 0.90</td><td class="n">≥ 0.95</td><td class="n">Every gate</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="panel">
+        <h3>Decisions I made, and what they cost</h3>
+        <div class="decisions">
+          <div><b>Prove value before buying</b>Of four options, buying a platform was fastest, but the bank could not yet specify or challenge a vendor model. A governed proof of value builds that capability first.</div>
+          <div><b>Start the agent early</b>The copilot build begins in week 11 on the candidate model, taking two weeks off the critical path. Possible rework after validation is named as a risk and owned.</div>
+          <div><b>Targets below the ceiling</b>The published best F1 of 0.63 used a proprietary library. We use open-source code, so the target is 0.55 with a 0.45 threshold.</div>
+          <div><b>Human decision by design</b>The copilot has no tool that closes an alert, files a report or contacts a customer. The constraint lives in the tool set, not in a prompt.</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Where the build stands</h3>
+        <p class="sub">Every code listing in the data engineering guide is labelled with its test status. Nothing has run on Databricks or the real IBM files yet, so no model results are claimed.</p>
+        <div class="stack" role="img" aria-label="48 code listings: 18 ran locally, 8 ran locally with a swap, 8 parsed or linted, 14 not run">
+          <div style="width:37.5%;background:var(--low)"></div><div style="width:16.67%;background:var(--tide)"></div><div style="width:16.67%;background:var(--med)"></div><div style="width:29.16%;background:var(--line)"></div>
+        </div>
+        <div class="keys">
+          <div><span><i style="background:var(--low)"></i>Ran locally on open-source Spark 4.0.1</span><span class="mono">18</span></div>
+          <div><span><i style="background:var(--tide)"></i>Ran locally with a Databricks-only feature swapped</span><span class="mono">8</span></div>
+          <div><span><i style="background:var(--med)"></i>Parsed or linted only</span><span class="mono">8</span></div>
+          <div><span><i style="background:var(--line)"></i>Not run yet</span><span class="mono">14</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="method">
+  <div class="wrap">
+    <div class="shead">
+      <p class="eyebrow">How I work</p>
+      <h2>Four habits that show up on every project</h2>
+    </div>
+    <div class="principles">
+      <div><p class="tool">Business case · PID · WBS</p><h3>Baseline first</h3><p>Scope, schedule and cost are agreed before anything moves, so every later conversation has something fixed to measure against.</p></div>
+      <div><p class="tool">Tolerances · exception reports</p><h3>Manage by exception</h3><p>Inside tolerance, I decide. Beyond it, the board hears from me early, with options, before the business feels it.</p></div>
+      <div><p class="tool">Earned value · SPI · CPI</p><h3>Measure progress</h3><p>Progress is a number with a source. When delivery drifts, the indices show it before anyone has to guess.</p></div>
+      <div><p class="tool">Acceptance criteria · sign-off</p><h3>Make done a fact</h3><p>Criteria agreed up front turn sign-off into evidence, whether the work is a cutover, a VPN stage or a vendor deliverable.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="credentials" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="shead"><p class="eyebrow">Credentials</p><h2>Certified, and still studying</h2></div>
+    <div class="creds">
+      <ul>
+        <li>Project Management Professional (PMP)<small>PMI</small></li>
+        <li>PRINCE2 Practitioner<small>PRINCE2</small></li>
+        <li>Azure Administrator Associate (AZ-104)<small>Microsoft</small></li>
+        <li>SAFe Product Owner/Product Manager (POPM)<small>SAFe</small></li>
+        <li>ITIL 4 Foundation<small>ITIL</small></li>
+        <li>Azure Fundamentals (AZ-900)<small>Microsoft</small></li>
+        <li>Professional Scrum Master (PSM I)<small>Scrum.org</small></li>
+        <li>Professional Scrum Product Owner (PSPO I)<small>Scrum.org</small></li>
+      </ul>
+      <ul>
+        <li>MSc in FinTech, First Class Honours<small>NCI Dublin, 2026</small></li>
+        <li>MSc in Business Administration<small>Univ. of Stavanger, 2024</small></li>
+        <li>Bachelor of Technology, Second Class Upper<small>FUTO, 2019</small></li>
+        <li>Member, PMI Ireland Chapter<small>Community</small></li>
+        <li>Mentor and tutor to students and junior colleagues<small>Community</small></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <p class="eyebrow" style="color:inherit;opacity:.7">Contact</p>
+    <h2>Have a programme that needs a steady hand?</h2>
+    <div class="lines">
+      <div class="line"><span id="em">hope.ochos@gmail.com</span><button type="button" data-copy="em">Copy</button></div>
+      <div class="line"><span id="ph">+353 89 947 9803</span><button type="button" data-copy="ph">Copy</button></div>
+      <div class="line"><a href="https://linkedin.com/in/hopeocholi" target="_blank" rel="noopener">linkedin.com/in/hopeocholi</a></div>
+    </div>
+  </div>
+</section>
+<footer class="wrap">Hope Ocholi · Dublin, Ireland · Project Tidewatch is a portfolio simulation on synthetic data</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+  /* ---------- filter chips ---------- */
+  const chips = [...document.querySelectorAll('.chip')];
+  chips.forEach(c => c.addEventListener('click', () => {
+    chips.forEach(x => x.setAttribute('aria-pressed', x === c ? 'true' : 'false'));
+    const f = c.dataset.f;
+    document.querySelectorAll('#cards .card').forEach(card => {
+      card.hidden = !(f === 'all' || card.dataset.tags.split(' ').includes(f));
+    });
+  }));
+
+  /* ---------- subtle 3D tilt on cards ---------- */
+  if (!reduce && matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        card.style.transform = `perspective(900px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg)`;
+      });
+      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+    });
+  }
+
+  /* ---------- gantt ---------- */
+  const g = document.getElementById('gantt');
+  const phases = [
+    ['P0 Initiate and mobilise',1,2,'pm'],['P1 Data foundation',3,5,'dm'],['P2 Features and modelling',6,10,'dm'],
+    ['P3 Independent validation',11,12,'as'],['P4 Agent design and build',11,16,'ag'],['P5 Integration and UAT',17,19,'ag'],['P6 Transition and close',20,20,'pm']];
+  const gates = {2:'G1',5:'G2',10:'G3',12:'G4',16:'G5',19:'G6',20:'G7'};
+  let h = '<div></div>';
+  for (let w=1; w<=20; w++) h += `<div class="wk">${w}</div>`;
+  phases.forEach(([n,s,e,c]) => {
+    h += `<div class="ph" title="${n}">${n}</div>`;
+    if (s>1) h += `<div style="grid-column:span ${s-1}"></div>`;
+    h += `<div class="b ${c}" style="grid-column:span ${e-s+1}"></div>`;
+    if (e<20) h += `<div style="grid-column:span ${20-e}"></div>`;
+  });
+  h += '<div class="ph gates-row">Stage gates</div>';
+  for (let w=1; w<=20; w++) h += gates[w] ? `<div class="gate" title="${gates[w]}"></div>` : '<div></div>';
+  h += '<div></div>';
+  for (let w=1; w<=20; w++) h += `<div class="wk" style="border:0">${gates[w]||''}</div>`;
+  g.innerHTML = h + '<div class="today" id="today"></div>';
+  const placeToday = () => {
+    const cols = g.querySelectorAll('.wk');
+    const wk3 = cols[2]; if (!wk3) return;
+    const gr = g.getBoundingClientRect(), r = wk3.getBoundingClientRect();
+    document.getElementById('today').style.left = (r.left - gr.left + r.width * 0.55) + 'px';
+  };
+  placeToday(); addEventListener('resize', placeToday);
+
+  /* ---------- risk heat map ---------- */
+  const risks = {
+    R01:[4,5,'Temporal or label leakage inflates reported model performance. Owner: Lead Data Scientist.'],
+    R02:[4,5,'Copilot states facts the evidence does not support. Owner: ML and AI Engineer.'],
+    R03:[4,4,'Performance on synthetic data does not transfer to production data.'],
+    R04:[4,4,'Class imbalance of about 0.1% gives unstable metrics and low precision.'],
+    R05:[3,4,'Investigators over-rely on copilot recommendations.'],
+    R06:[3,4,'Prompt injection or tool misuse exposes data or manipulates output.'],
+    R07:[3,4,'Explanations are insufficient for audit, regulator or customer challenge.'],
+    R08:[3,4,'Typologies shift after deployment and performance degrades.'],
+    R09:[4,3,'Scope creep: more datasets, GNN research, extra agent features. Owner: Project Manager.'],
+    R10:[2,5,'Regulatory non-compliance: GDPR, AMLR Article 76(5), AI Act, tipping-off.'],
+    R11:[3,3,'Graph feature computation exceeds available compute.'],
+    R12:[3,3,'Licence constraint on the benchmark graph feature library.'],
+    R13:[3,3,'Key-person dependency delays the critical path. Owner: Project Manager.'],
+    R14:[2,4,'Proxy features drive unfair outcomes for corridors or segments.'],
+    R15:[2,3,'LLM provider dependency: cost, latency, deprecation or outage.']
+  };
+  const heat = document.getElementById('heat');
+  let hh = '';
+  const band = s => s>=20?'crit':s>=12?'high':s>=6?'med':'low';
+  const pl = ['','Rare','Unlikely','Possible','Likely','Almost certain'];
+  for (let p=5; p>=1; p--) {
+    hh += `<div class="ax">${p} ${pl[p]}</div>`;
+    for (let i=1; i<=5; i++) {
+      const ids = Object.keys(risks).filter(k => risks[k][0]===p && risks[k][1]===i);
+      hh += `<div class="c ${band(p*i)}">${ids.map(id=>`<button type="button" class="rk" id="rk-${id}" data-r="${id}" aria-pressed="false">${id}</button>`).join('')}<em>${p*i}</em></div>`;
+    }
+  }
+  hh += '<div class="ax"></div>' + ['Negligible','Minor','Moderate','Major','Severe'].map((x,i)=>`<div class="ax">${i+1} ${x}</div>`).join('');
+  heat.innerHTML = hh;
+  const out = document.getElementById('riskout');
+  heat.addEventListener('click', e => {
+    const b = e.target.closest('.rk'); if (!b) return;
+    heat.querySelectorAll('.rk').forEach(x => x.setAttribute('aria-pressed', x===b?'true':'false'));
+    const [p,i,t] = risks[b.dataset.r];
+    out.textContent = `${b.dataset.r} · score ${p*i}: ${t}`;
+  });
+
+  /* ---------- copy buttons ---------- */
+  document.querySelectorAll('[data-copy]').forEach(btn => btn.addEventListener('click', () => {
+    const el = document.getElementById(btn.dataset.copy);
+    const done = () => { btn.textContent = 'Copied'; setTimeout(()=>btn.textContent='Copy', 1600); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected'; setTimeout(()=>btn.textContent='Copy', 1600); };
+    try { navigator.clipboard.writeText(el.textContent).then(done, fallback); } catch(_) { fallback(); }
+  }));
+
+  /* ---------- 3D delivery network ---------- */
+  const canvas = document.getElementById('net');
+  if (!window.THREE) return;
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true}); } catch(_) { canvas.hidden = true; return; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(42, 1, .1, 100);
+  const world = new THREE.Group(); scene.add(world);
+  scene.add(new THREE.AmbientLight(0xffffff, .65));
+  const dl = new THREE.DirectionalLight(0xffffff, .8); dl.position.set(4,6,8); scene.add(dl);
+
+  const projects = [
+    ['p1','Project Tidewatch'],['p2','Azure migration'],['p3','Network deployment'],['p4','Dublin office'],
+    ['p5','IT programme and budget'],['p6','Payment gateway'],['p7','KPI reporting']];
+  const links = [['p5','p2'],['p5','p3'],['p5','p4'],['p2','p3'],['p3','p4'],['p6','p7'],['p6','p1'],['p7','p1'],['p2','p1'],['p5','p1']];
+
+  // project nodes on a gently flattened sphere
+  const R = 2.6, nodes = {}, meshes = [];
+  const geo = new THREE.IcosahedronGeometry(.2, 1);
+  projects.forEach(([id,name], k) => {
+    const y = 1 - (k / (projects.length - 1)) * 2, r = Math.sqrt(1 - y*y), th = k * 2.39996;
+    const pos = new THREE.Vector3(Math.cos(th)*r*R, y*R*.75, Math.sin(th)*r*R);
+    const mat = new THREE.MeshStandardMaterial({roughness:.35, metalness:.1});
+    const m = new THREE.Mesh(geo, mat); m.position.copy(pos); m.userData = {id, name};
+    world.add(m); meshes.push(m); nodes[id] = pos;
+    const halo = new THREE.Mesh(new THREE.RingGeometry(.3,.33,40), new THREE.MeshBasicMaterial({transparent:true, opacity:0, side:THREE.DoubleSide}));
+    halo.position.copy(pos); world.add(halo); m.userData.halo = halo;
+  });
+
+  // ambient accounts: small points, many wired to a project node (fan-in / fan-out)
+  const N = 170, amb = [], ap = new Float32Array(N*3);
+  for (let i=0;i<N;i++){
+    const u = Math.random()*2-1, t = Math.random()*Math.PI*2, rr = 1.6 + Math.random()*3.2;
+    const v = new THREE.Vector3(Math.sqrt(1-u*u)*Math.cos(t)*rr, u*rr*.7, Math.sqrt(1-u*u)*Math.sin(t)*rr);
+    amb.push(v); ap.set([v.x,v.y,v.z], i*3);
+  }
+  const ambGeo = new THREE.BufferGeometry(); ambGeo.setAttribute('position', new THREE.BufferAttribute(ap,3));
+  const ambMat = new THREE.PointsMaterial({size:.05, transparent:true, opacity:.75});
+  world.add(new THREE.Points(ambGeo, ambMat));
+
+  const edges = [];
+  links.forEach(([a,b]) => edges.push([nodes[a], nodes[b], true]));
+  amb.forEach(v => {
+    if (Math.random() < .42) {
+      let best = null, bd = 1e9;
+      for (const id in nodes) { const d = v.distanceTo(nodes[id]); if (d < bd) { bd = d; best = nodes[id]; } }
+      edges.push([v, best, false]);
+    }
+  });
+  const mk = filt => {
+    const arr = []; edges.filter(e => e[2]===filt).forEach(([a,b]) => arr.push(a.x,a.y,a.z,b.x,b.y,b.z));
+    const gg = new THREE.BufferGeometry(); gg.setAttribute('position', new THREE.Float32BufferAttribute(arr,3)); return gg;
+  };
+  const coreMat = new THREE.LineBasicMaterial({transparent:true, opacity:.55});
+  const ambLineMat = new THREE.LineBasicMaterial({transparent:true, opacity:.14});
+  world.add(new THREE.LineSegments(mk(true), coreMat));
+  world.add(new THREE.LineSegments(mk(false), ambLineMat));
+
+  // payments flowing along edges
+  const F = reduce ? 0 : 90, flow = [], fp = new Float32Array(Math.max(F,1)*3);
+  for (let i=0;i<F;i++) flow.push({e: edges[(Math.random()*edges.length)|0], t: Math.random(), s: .0025 + Math.random()*.006});
+  const flowGeo = new THREE.BufferGeometry(); flowGeo.setAttribute('position', new THREE.BufferAttribute(fp,3));
+  const flowMat = new THREE.PointsMaterial({size:.075, transparent:true, opacity:.95});
+  if (F) world.add(new THREE.Points(flowGeo, flowMat));
+
+  function paint(){
+    const acc = new THREE.Color(css('--accent')), tide = new THREE.Color(css('--tide')), ink = new THREE.Color(css('--ink')), mut = new THREE.Color(css('--muted'));
+    meshes.forEach(m => { m.material.color.copy(acc); m.material.emissive.copy(acc).multiplyScalar(.35); m.userData.halo.material.color.copy(acc); });
+    ambMat.color.copy(mut); coreMat.color.copy(tide); ambLineMat.color.copy(ink); flowMat.color.copy(acc);
+    draw();
+  }
+
+  // labels
+  const lab = document.getElementById('labels'), labels = {};
+  meshes.forEach(m => { const d = document.createElement('div'); d.className = 'nlabel'; d.textContent = m.userData.name; lab.appendChild(d); labels[m.userData.id] = d; });
+
+  const hero = canvas.parentElement;
+  function size(){
+    const w = hero.clientWidth, h = hero.clientHeight;
+    renderer.setSize(w, h, false); camera.aspect = w/h;
+    const narrow = w < 720;
+    camera.position.set(narrow ? 0 : -2.2, narrow ? 1.6 : 0, narrow ? 10.5 : 8.5);
+    camera.lookAt(narrow ? 0 : -2.2, narrow ? 1.6 : 0, 0);
+    world.position.set(narrow ? 0 : 1.2, narrow ? 2.9 : 0, 0);
+    camera.updateProjectionMatrix(); draw();
+  }
+
+  // interaction
+  let rotY = .4, rotX = .15, vy = reduce ? 0 : .0016, dragging = false, moved = 0, lx = 0, ly = 0, hover = null;
+  const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
+  function pick(e){
+    const r = canvas.getBoundingClientRect();
+    mouse.set(((e.clientX-r.left)/r.width)*2-1, -((e.clientY-r.top)/r.height)*2+1);
+    ray.setFromCamera(mouse, camera);
+    const hit = ray.intersectObjects(meshes)[0]; return hit ? hit.object : null;
+  }
+  canvas.addEventListener('pointerdown', e => { dragging = true; moved = 0; lx = e.clientX; ly = e.clientY; canvas.classList.add('drag'); });
+  addEventListener('pointerup', e => {
+    if (!dragging) return; dragging = false; canvas.classList.remove('drag');
+    if (moved < 6) { const o = pick(e); if (o) go(o.userData.id); }
+  });
+  canvas.addEventListener('pointermove', e => {
+    if (dragging) {
+      const dx = e.clientX-lx, dy = e.clientY-ly; moved += Math.abs(dx)+Math.abs(dy); lx = e.clientX; ly = e.clientY;
+      rotY += dx*.006; rotX = Math.max(-.6, Math.min(.6, rotX + dy*.004)); draw();
+    } else {
+      const o = pick(e); if (o !== hover) { hover = o; canvas.style.cursor = o ? 'pointer' : ''; draw(); }
+    }
+  });
+  canvas.addEventListener('pointerleave', () => { hover = null; draw(); });
+  function go(id){
+    const card = document.getElementById(id); if (!card) return;
+    document.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x.dataset.f==='all'?'true':'false'));
+    document.querySelectorAll('#cards .card').forEach(c => c.hidden = false);
+    card.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'center'});
+    card.classList.add('flash'); setTimeout(() => card.classList.remove('flash'), 1800);
+    const d = card.querySelector('details'); if (d) d.open = true;
+  }
+
+  const tmp = new THREE.Vector3();
+  function draw(){
+    world.rotation.set(rotX, rotY, 0);
+    meshes.forEach(m => {
+      const on = m === hover; m.scale.setScalar(on ? 1.5 : 1);
+      m.userData.halo.material.opacity = on ? .9 : 0; m.userData.halo.lookAt(camera.position);
+    });
+    renderer.render(scene, camera);
+    const w = canvas.clientWidth, h = canvas.clientHeight, narrow = w < 720;
+    meshes.forEach(m => {
+      m.getWorldPosition(tmp); tmp.project(camera);
+      const L = labels[m.userData.id];
+      const front = tmp.z < 1 && Math.abs(tmp.x) < 1.05 && Math.abs(tmp.y) < 1.05;
+      L.style.left = ((tmp.x+1)/2*w) + 'px'; L.style.top = ((1-tmp.y)/2*h) + 'px';
+      L.style.opacity = !front ? 0 : (m === hover ? 1 : (narrow ? 0 : .85));
+      L.classList.toggle('on', m === hover);
+    });
+  }
+
+  let running = true;
+  new IntersectionObserver(es => { running = es[0].isIntersecting; }).observe(hero);
+  function tick(){
+    if (running) {
+      if (!dragging) rotY += vy;
+      for (let i=0;i<F;i++){
+        const f = flow[i]; f.t += f.s;
+        if (f.t > 1) { f.t = 0; f.e = edges[(Math.random()*edges.length)|0]; }
+        const [a,b] = f.e; fp[i*3] = a.x+(b.x-a.x)*f.t; fp[i*3+1] = a.y+(b.y-a.y)*f.t; fp[i*3+2] = a.z+(b.z-a.z)*f.t;
+      }
+      if (F) flowGeo.attributes.position.needsUpdate = true;
+      draw();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  new ResizeObserver(size).observe(hero);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
+  new MutationObserver(paint).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+  size(); paint();
+  if (!reduce) tick();
+})();
+</script>
+
+</body>
+</html>
